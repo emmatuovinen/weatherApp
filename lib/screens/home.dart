@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
               ],
             ),
             Container(
-              height: 200,
+              height: 220,
               child: FutureBuilder<Stats>(
                 future: stats,
                 builder: (context, snapshot) {
@@ -66,15 +66,55 @@ class _HomeState extends State<Home> {
                               fontSize: 30,
                             ),
                           ),
-                          Text(
-                            new DateFormat.MMMd()
-                                .add_Hm()
-                                .format(new DateTime.now()),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                new DateFormat.E().format(new DateTime.now()),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Container(
+                                height: 20,
+                                child: VerticalDivider(
+                                  thickness: 2.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                new DateFormat.MMMd()
+                                    .format(new DateTime.now()),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Container(
+                                height: 20,
+                                child: VerticalDivider(
+                                  thickness: 2.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                new DateFormat.Hm()
+                                    // .add_Hm()
+                                    .format(new DateTime.now()),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              VerticalDivider(),
+                            ],
                           ),
                           Text(
                             snapshot.data.currentWeatherCondition,
@@ -113,7 +153,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Container(
-              height: 100,
+              height: 60,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const <Widget>[
