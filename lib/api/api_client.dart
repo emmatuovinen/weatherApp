@@ -2,8 +2,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/stats.dart';
 
+// google places api key AIzaSyAFzTFTnaRPjOgWAK48vLJYPaiI0GEPSGs
+
 Future<Stats> fetchStats() async {
-  final String searchParam = 'Berlin,de';
+  final String searchParam = 'Boston,us';
   final String appid = 'APPID=67ffa7eb511365ace5f39980cc682f2d';
 
   final response = await http.get(

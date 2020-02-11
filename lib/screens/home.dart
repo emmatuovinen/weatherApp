@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:time_machine/time_machine.dart';
 import '../models/stats.dart';
 import '../api/api_client.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
+}
+
+void _setTimeZone() async {
+  print('Timezonesta moi');
+
+  var now = Instant.now();
+
+  await TimeMachine.initialize({
+    'rootBundle': rootBundle
+  });
+  debugPrint('UTC time: $now');
 }
 
 class _HomeState extends State<Home> {
@@ -15,8 +29,10 @@ class _HomeState extends State<Home> {
   void initState() {
     debugPrint(new DateFormat.yMMMd().format(new DateTime.now()));
     super.initState();
+    _setTimeZone();
     stats = fetchStats();
   }
+
 
   @override
   Widget build(BuildContext context) => Scaffold(
