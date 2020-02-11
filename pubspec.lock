@@ -165,6 +165,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  resource:
+    dependency: transitive
+    description:
+      name: resource
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.6"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -212,6 +219,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.11"
+  time_machine:
+    dependency: "direct main"
+    description:
+      name: time_machine
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.12"
+  timezone:
+    dependency: "direct main"
+    description:
+      name: timezone
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.6"
   typed_data:
     dependency: transitive
     description:

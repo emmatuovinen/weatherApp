@@ -11,6 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Future<Stats> stats;
+
   @override
   void initState() {
     debugPrint(new DateFormat.yMMMd().format(new DateTime.now()));
@@ -49,7 +50,7 @@ class _HomeState extends State<Home> {
               ],
             ),
             Container(
-              height: 220,
+              height: 240,
               child: FutureBuilder<Stats>(
                 future: stats,
                 builder: (context, snapshot) {
@@ -58,47 +59,54 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.all(30),
                       child: Column(
                         children: [
-                          Text(
-                            snapshot.data.city.toUpperCase(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              snapshot.data.city.toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 35,
+                                color: Colors.grey[700],
+                              ),
                             ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                new DateFormat.E().format(new DateTime.now()),
+                                new DateFormat.E()
+                                    .format(new DateTime.now())
+                                    .toUpperCase(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   color: Colors.grey,
                                 ),
                               ),
                               Container(
-                                height: 20,
+                                height: 15,
                                 child: VerticalDivider(
-                                  thickness: 2.0,
+                                  thickness: 1.0,
                                   color: Colors.grey,
                                 ),
                               ),
                               Text(
                                 new DateFormat.MMMd()
-                                    .format(new DateTime.now()),
+                                    .format(new DateTime.now())
+                                    .toUpperCase(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   color: Colors.grey,
                                 ),
                               ),
                               Container(
-                                height: 20,
+                                height: 15,
                                 child: VerticalDivider(
-                                  thickness: 2.0,
+                                  thickness: 1.0,
                                   color: Colors.grey,
                                 ),
                               ),
@@ -109,11 +117,23 @@ class _HomeState extends State<Home> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   color: Colors.grey,
                                 ),
                               ),
-                              VerticalDivider(),
+                              Text(
+                                snapshot.data.countryCode,
+
+                                // new DateFormat.Hm()
+                                //     // .add_Hm()
+                                //     .format(new DateTime.now()),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.grey,
+                                ),
+                              ),
                             ],
                           ),
                           Text(
@@ -122,6 +142,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
+                              color: Colors.grey,
                             ),
                           ),
                           Text(
@@ -130,6 +151,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
+                              color: Colors.grey[600],
                             ),
                           ),
                           Text(
@@ -140,6 +162,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
+                              color: Colors.grey,
                             ),
                           ),
                         ],
