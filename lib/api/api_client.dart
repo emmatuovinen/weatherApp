@@ -1,18 +1,27 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/stats.dart';
-
-// google places api key AIzaSyAFzTFTnaRPjOgWAK48vLJYPaiI0GEPSGs
+import 'package:flutter/services.dart' show rootBundle;
+import '../models/apikey.dart';
 
 Future<Stats> fetchStats() async {
-  final String searchParam = 'Boston,us';
-  final String appid = 'APPID=67ffa7eb511365ace5f39980cc682f2d';
+  Future<String> loadAsset() async {
+    return await rootBundle.loadString('assets/apiData.json');
+  }
+
+  String data = await loadAsset();
+  
+  var stringJsonData = '${data}';
+  var parsedData = ApiKey.fromJson(json.decode(stringJsonData));
+
+  final String searchParam = 'Miami,us';
 
   final response = await http.get(
       'https://api.openweathermap.org/data/2.5/weather?q=' +
           searchParam +
           '&units=metric&' +
-          appid);
+          parsedData.weatherKey);
   if (response.statusCode == 200) {
     // If the call to the server was successful, parse the JSON.
     return Stats.fromJson(json.decode(response.body));
