@@ -4,7 +4,7 @@ import '../models/stats.dart';
 import '../api/api_client.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -17,14 +17,30 @@ void _setTimeZone() async {
 
   var now = Instant.now();
 
-  await TimeMachine.initialize({
-    'rootBundle': rootBundle
-  });
+  await TimeMachine.initialize({'rootBundle': rootBundle});
   debugPrint('UTC time: $now');
 }
 
 class _HomeState extends State<Home> {
   Future<Stats> stats;
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle = TextStyle(fontSize: 30);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Search',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Favorites',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   void initState() {
@@ -33,7 +49,6 @@ class _HomeState extends State<Home> {
     _setTimeZone();
     stats = fetchStats();
   }
-
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -62,6 +77,11 @@ class _HomeState extends State<Home> {
                   height: 50,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: Colors.black),
+                ),
+                SvgPicture.asset(
+                  'images/heart.svg',
+                  height: 100,
+                  color: Colors.pink,
                 ),
               ],
             ),
@@ -191,26 +211,44 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
-            Container(
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const <Widget>[
-                  Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                    size: 40.0,
-                  ),
-                  Icon(
-                    Icons.favorite,
-                    color: Colors.pink,
-                    size: 40.0,
-                    semanticLabel: 'Text to announce in accessibility modes',
-                  ),
-                ],
-              ),
+
+            // Container(
+            //   height: 60,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: const <Widget>[
+            //       Icon(
+            //         Icons.search,
+            //         color: Colors.grey,
+            //         size: 40.0,
+            //       ),
+            //       Icon(
+            //         Icons.favorite,
+            //         color: Colors.pink,
+            //         size: 40.0,
+            //         semanticLabel: 'Text to announce in accessibility modes',
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            _widgetOptions.elementAt(_selectedIndex),
+          ],
+        ),
+        // Center(child: _widgetOptions.elementAt(_selectedIndex),),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              title: Text('Search'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              title: Text('Favorites'),
             ),
           ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
         ),
       );
 }

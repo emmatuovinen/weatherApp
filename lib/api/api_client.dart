@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/stats.dart';
@@ -11,8 +10,8 @@ Future<Stats> fetchStats() async {
   }
 
   String data = await loadAsset();
-  
-  var stringJsonData = '${data}';
+
+  var stringJsonData = '$data';
   var parsedData = ApiKey.fromJson(json.decode(stringJsonData));
 
   final String searchParam = 'Miami,us';
