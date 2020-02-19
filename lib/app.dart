@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
+import 'screens/search.dart';
+import 'screens/favorite.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // TimeMachine discovers your TimeZone heuristically (it's actually pretty fast).
@@ -15,7 +17,13 @@ class WeatherApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: Home(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Home(),
+        '/search': (context) => Search(),
+        '/favorite': (context) => Favorite(),
+      },
+      // home: Home(),
     );
   }
 }
