@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Favorite extends StatefulWidget {
   Favorite({Key key}) : super(key: key);
@@ -17,14 +18,34 @@ class _FavoriteState extends State<Favorite> {
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(title: Text('Welcome to favorite screen')),
       body: ListView(children: [
-        Text('Favorite here'),
-        Text('And some other favorites here'),
+        Row(children: [
+          SvgPicture.asset('images/heart.svg',
+              height: 100, color: Colors.pinkAccent),
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Text('Favorite 1 here',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('And some other info here'),
+          ])
+        ]),
         Divider(),
-        Text('Favorite 2 here'),
-        Text('And some other favorites here'),
+        Row(children: [
+          SvgPicture.asset('images/heart.svg',
+              height: 100, color: Colors.pinkAccent),
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Text('Favorite 2 here',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('And some other info here'),
+          ])
+        ]),
         Divider(),
-        Text('Favorite 3 here'),
-        Text('And some other favorites here'),
-        Divider(),
+        Row(children: [
+          SvgPicture.asset('images/heart.svg',
+              height: 100, color: Colors.pinkAccent),
+          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Text('Favorite 3 here',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('And some other info here'),
+          ])
+        ]),
       ]));
 }
