@@ -19,5 +19,12 @@ class _FavoriteState extends State<Favorite> {
       body: ListView(children: [
         Text('Favorite here'),
         Text('And some other favorites here'),
+        Divider(),
+        Text('Favorite 2 here'),
+        Text('And some other favorites here'),
+        Divider(),
+        Text('Favorite 3 here'),
+        Text('And some other favorites here'),
+        Divider(),
       ]));
 }

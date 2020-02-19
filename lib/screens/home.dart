@@ -194,41 +194,82 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      persistentFooterButtons: <Widget>[
-        RaisedButton(
-          elevation: 10.0,
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-          color: Colors.green,
-          child: Icon(
-            Icons.home,
-            color: Colors.white,
-          ),
+      // persistentFooterButtons: <Widget>[
+      //   IconButton(
+      //     onPressed: () {
+      //       Navigator.pushNamed(context, '/home');
+      //     },
+      //     icon: Icon(
+      //       Icons.home,
+      //       color: Colors.pink,
+      //     ),
+      //   ),
+      //   IconButton(
+      //     onPressed: () {
+      //       Navigator.pushNamed(context, '/search');
+      //     },
+      //     icon: Icon(
+      //       Icons.search,
+      //       color: Colors.pink,
+      //     ),
+      //   ),
+      //   IconButton(
+      //     onPressed: () {
+      //       Navigator.pushNamed(context, '/favorite');
+      //     },
+      //     icon: Icon(
+      //       Icons.favorite,
+      //       color: Colors.pink,
+      //     ),
+      //   ),
+      // ],
+      bottomNavigationBar: new Container(
+        padding: EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
+                icon: Icon(
+                  Icons.home,
+                  color: Colors.pink[400],
+                ),
+                iconSize: 40.0,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/search');
+                },
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
+                iconSize: 40.0,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/favorite');
+                },
+                icon: Icon(
+                  Icons.favorite,
+                  color: Colors.pink[200],
+                ),
+                iconSize: 40.0,
+              ),
+            ),
+          ],
         ),
-        RaisedButton(
-          elevation: 10.0,
-          onPressed: () {
-            Navigator.pushNamed(context, '/search');
-          },
-          color: Colors.blueGrey,
-          child: Icon(
-            Icons.search,
-            color: Colors.white,
-          ),
-        ),
-        RaisedButton(
-          elevation: 10.0,
-          onPressed: () {
-            Navigator.pushNamed(context, '/favorite');
-          },
-          color: Colors.blueGrey,
-          child: Icon(
-            Icons.favorite,
-            color: Colors.white,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
