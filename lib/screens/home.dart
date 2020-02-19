@@ -12,24 +12,39 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-void _setTimeZone() async {
+
+class _HomeState extends State<Home> {
+
+  void _setTimeZone(timeDiff) async {
   print('Timezonesta moi');
 
   var now = Instant.now();
+  var currentUTC = now.toString('dddd yyyy-MM-dd HH:mm');
+  var timeCalc = int.tryParse(currentUTC.substring(currentUTC.length-5, currentUTC.length-3 )) - timeDiff;
 
   await TimeMachine.initialize({
     'rootBundle': rootBundle
   });
-  debugPrint('UTC time: $now');
-}
 
-class _HomeState extends State<Home> {
+  var tzdb = await DateTimeZoneProviders.tzdb;
+  var samoa = await tzdb['Pacific/Apia']; 
+  debugPrint('Local zone ${DateTimeZone.local}');
+  debugPrint('UTC time formatted: ${now.toString('dddd yyyy-MM-dd HH:mm')}');
+  debugPrint('UTC time: $now');
+  debugPrint('Samoa time: ${now.inZone(samoa)}');
+  debugPrint('substring: ${currentUTC.substring(currentUTC.length-5, currentUTC.length-3)}');
+  debugPrint('Time in x: ${int.tryParse(currentUTC.substring(currentUTC.length-5, currentUTC.length-3 )) - timeDiff}');
+
+  
+  }
+  
+
   Future<Stats> stats;
   @override
   void initState() {
     debugPrint(new DateFormat.yMMMd().format(new DateTime.now()));
     super.initState();
-    _setTimeZone();
+    _setTimeZone(5.0);
     stats = fetchStats();
   }
 
@@ -119,9 +134,9 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               Text(
-                                new DateFormat.Hm()
-                                    // .add_Hm()
-                                    .format(new DateTime.now()),
+                                (snapshot.data.timezone/3600).toString(),
+                                // new DateFormat.Hm()                                  
+                                //     .format(new DateTime.now()),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,

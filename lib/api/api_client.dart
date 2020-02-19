@@ -15,7 +15,7 @@ Future<Stats> fetchStats() async {
   var stringJsonData = '${data}';
   var parsedData = ApiKey.fromJson(json.decode(stringJsonData));
 
-  final String searchParam = 'Miami,us';
+  final String searchParam = 'cancun,mx';
 
   final response = await http.get(
       'https://api.openweathermap.org/data/2.5/weather?q=' +
