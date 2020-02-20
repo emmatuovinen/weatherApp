@@ -15,7 +15,6 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text('Welcome to search screen')),
         body: MyCustomForm(),
       );
 }
@@ -32,32 +31,43 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please, type in a city';
-                }
-                return null;
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: RaisedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing search')));
-                  }
-                },
-                child: Text('Submit'),
-              ),
-            ),
-          ],
-        ));
+    return Center(
+      child: Container(
+        alignment: Alignment.center,
+        constraints: BoxConstraints.tightForFinite(height: 300),
+        padding: EdgeInsets.all(40),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Type in a city name',
+                    prefixIcon: Icon(
+                      Icons.search,
+                      size: 30,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please, type in a city';
+                    }
+                    return null;
+                  },
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text('Processing search')));
+                    }
+                  },
+                  child: Text('Submit'),
+                ),
+              ],
+            )),
+      ),
+    );
   }
 }

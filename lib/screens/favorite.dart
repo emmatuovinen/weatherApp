@@ -16,8 +16,7 @@ class _FavoriteState extends State<Favorite> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: Text('Welcome to favorite screen')),
-      body: ListView(children: [
+          body: ListView(children: [
         Row(children: [
           SvgPicture.asset('images/heart.svg',
               height: 100, color: Colors.pinkAccent),
