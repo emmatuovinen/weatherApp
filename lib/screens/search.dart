@@ -26,47 +26,72 @@ class MyCustomForm extends StatefulWidget {
   }
 }
 
-class MyCustomFormState extends State<MyCustomForm> {
+class MyCustomFormState extends State<MyCustomForm>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
+  AnimationController _controller;
+  Animation<Offset> _offsetAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..forward();
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutQuart));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        alignment: Alignment.center,
-        constraints: BoxConstraints.tightForFinite(height: 300),
-        padding: EdgeInsets.all(40),
-        child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Type in a city name',
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 30,
+    return SlideTransition(
+      position: _offsetAnimation,
+      child: Center(
+        child: Container(
+          alignment: Alignment.center,
+          constraints: BoxConstraints.tightForFinite(height: 300),
+          padding: EdgeInsets.all(40),
+          child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Type in a city name',
+                      prefixIcon: Icon(
+                        Icons.search,
+                        size: 30,
+                      ),
                     ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please, type in a city';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please, type in a city';
-                    }
-                    return null;
-                  },
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text('Processing search')));
-                    }
-                  },
-                  child: Text('Submit'),
-                ),
-              ],
-            )),
+                  RaisedButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text('Processing search')));
+                      }
+                    },
+                    child: Text('Submit'),
+                  ),
+                ],
+              )),
+        ),
       ),
     );
   }

@@ -67,7 +67,6 @@ class _CurrentLocationState extends State<CurrentLocation> {
             ],
           ),
           Container(
-            height: 240,
             child: FutureBuilder<Stats>(
               future: stats,
               builder: (context, snapshot) {
@@ -184,7 +183,14 @@ class _CurrentLocationState extends State<CurrentLocation> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-                return CircularProgressIndicator();
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                      child: Container(
+                          height: 150,
+                          width: 150,
+                          child: CircularProgressIndicator())),
+                );
               },
             ),
           ),
