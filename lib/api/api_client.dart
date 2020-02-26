@@ -3,6 +3,7 @@ import 'dart:convert';
 import '../models/stats.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import '../models/apikey.dart';
+import '../models/location.dart';
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('assets/apiData.json');
@@ -26,10 +27,12 @@ Future<Stats> fetchStats(latitude, longitude) async {
   }
 }
 
-void locationSearchByCoordinates(latitude, longitude) async {
+Future<LocationDetails> locationSearchByCoordinates(latitude, longitude) async {
   String data = await loadAsset();
   var stringJsonData = '$data';
   var parsedData = ApiKey.fromJson(json.decode(stringJsonData));
+
+  print(latitude);
 
   String url =
       'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=1000&key=${parsedData.googleKey}';
@@ -41,12 +44,13 @@ void locationSearchByCoordinates(latitude, longitude) async {
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     print(data);
+    return LocationDetails.fromJson(json.decode(response.body));
   } else {
     throw Exception('Failed to load stats');
   }
 }
 
-void locationSearchByString(String searchParam) async {
+Future<LocationDetails> locationSearchByString(String searchParam) async {
   String data = await loadAsset();
 
   var stringJsonData = '$data';
@@ -62,8 +66,8 @@ void locationSearchByString(String searchParam) async {
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     print(data);
+    return LocationDetails.fromJson(json.decode(response.body));
   } else {
     throw Exception('An error occurred');
   }
-  locationSearchByCoordinates(62.17924659999999, 27.825911);
 }

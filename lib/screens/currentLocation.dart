@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
+import 'package:weather_app/models/location.dart';
 import '../models/stats.dart';
 import '../api/api_client.dart';
 import 'package:intl/intl.dart';
@@ -12,25 +13,29 @@ class CurrentLocation extends StatefulWidget {
   _CurrentLocationState createState() => _CurrentLocationState();
 }
 
-
 class _CurrentLocationState extends State<CurrentLocation> {
   Future<Stats> stats;
+  Future<LocationDetails> location;
 
   void _setTimeZone() async {
-  print('Timezonesta moi');
+    print('Timezonesta moi');
 
-  var now = Instant.now();
+    var now = Instant.now();
 
-  await TimeMachine.initialize({'rootBundle': rootBundle});
-  debugPrint('UTC time: $now');
+    await TimeMachine.initialize({'rootBundle': rootBundle});
+    debugPrint('UTC time: $now');
   }
+
+  final String initialLatitude = '17.9970207';
+  final String initialLongitude = '-76.7935791';
 
   @override
   void initState() {
     debugPrint(new DateFormat.yMMMd().format(new DateTime.now()));
     super.initState();
     _setTimeZone();
-    stats = fetchStats(59.33, 18.06);
+    stats = fetchStats(initialLatitude, initialLongitude);
+    location = locationSearchByCoordinates(initialLatitude, initialLongitude);
   }
 
   @override
@@ -72,23 +77,32 @@ class _CurrentLocationState extends State<CurrentLocation> {
               future: stats,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  
                   return Container(
                     padding: EdgeInsets.all(30),
                     child: Column(
                       children: [
                         Container(
-                          margin: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            snapshot.data.latitude.toString() + ', ' + snapshot.data.longitude.toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 35,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ),
+                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: FutureBuilder<LocationDetails>(
+                                future: location,
+                                builder: (context, snapshot2) {
+                                  if (snapshot2.hasData) {
+                                    locationSearchByCoordinates(
+                                        snapshot.data.latitude,
+                                        snapshot.data.longitude);
+                                    return Container(
+                                      child: Text(
+                                        snapshot2.data.name,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 35,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                })),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -131,7 +145,9 @@ class _CurrentLocationState extends State<CurrentLocation> {
                             Text(
                               new DateFormat.Hm()
                                   // .add_Hm()
-                                  .format(new DateTime.fromMillisecondsSinceEpoch(snapshot.data.epochTime*1000)),
+                                  .format(
+                                      new DateTime.fromMillisecondsSinceEpoch(
+                                          snapshot.data.epochTime * 1000)),
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
