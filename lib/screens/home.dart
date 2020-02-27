@@ -1,97 +1,67 @@
 import 'package:flutter/material.dart';
-import '../models/stats.dart';
-import '../api/api_client.dart';
-import 'package:intl/intl.dart';
+import 'currentLocation.dart';
+import 'favorite.dart';
+import 'search.dart';
+// import 'imageStack.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key:key);
+  Home({Key key}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  int currentTab = 0;
+  CurrentLocation currentLocation;
+  // ImageStack imageStack;
+  Search search;
+  Favorite favorite;
+  List<Widget> pages;
+  Widget currentPage;
 
-  
-
-  Future<Stats> stats;
   @override
   void initState() {
-  debugPrint(new DateFormat.yMMMd().format(new DateTime.now()));
+    currentLocation = CurrentLocation();
+    search = Search();
+    favorite = Favorite();
+    // imageStack = ImageStack();
+    pages = [currentLocation, search, favorite];
+    currentPage = currentLocation;
     super.initState();
-    stats = fetchStats();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            centerTitle: true, 
-            title: Text('Welcome to Weather App')),
-        body: ListView(
-          children: [
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.orange
-              ),
-            ),
-            Container(
-              child: FutureBuilder<Stats>(
-                future: stats,
-                builder: (context, snapshot) {
-                  if(snapshot.hasData) {
-                    return Container(
-                      padding: EdgeInsets.all(30),
-                      child: Column(
-                        children: [
-                          Text(
-                            snapshot.data.city,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                            ),
-                          ),
-                          Text(
-                            new DateFormat.MMMd().add_Hm().format(new DateTime.now()),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            snapshot.data.currentWeatherCondition,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          Text(
-                            snapshot.data.currentTemperature + ' °C',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                            ),
-                          ),
-                          Text(
-                            'Feels like ' + snapshot.data.feelsLikeTemperature + ' °C',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ]
-                      )
-                    );
-                  }
-                })
-            )
-          ]
-        )
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Welcome to Weather App'),
+      ),
+      body: currentPage,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentTab,
+        selectedItemColor: Colors.pink[400],
+        onTap: (int index) {
+          setState(() {
+            currentTab = index;
+            currentPage = pages[index];
+          });
+        },
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            title: Text('search'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            title: Text('favorite'),
+          ),
+        ],
+      ),
+    );
+  }
 }
-
