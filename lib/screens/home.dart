@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'currentLocation.dart';
 import 'favorite.dart';
 import 'search.dart';
+// import 'imageStack.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -12,6 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int currentTab = 0;
   CurrentLocation currentLocation;
+  // ImageStack imageStack;
   Search search;
   Favorite favorite;
   List<Widget> pages;
@@ -22,6 +24,7 @@ class _HomeState extends State<Home> {
     currentLocation = CurrentLocation();
     search = Search();
     favorite = Favorite();
+    // imageStack = ImageStack();
     pages = [currentLocation, search, favorite];
     currentPage = currentLocation;
     super.initState();
