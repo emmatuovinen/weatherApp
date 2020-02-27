@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/location.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import '../models/stats.dart';
 import '../api/api_client.dart';
@@ -12,6 +13,7 @@ class ImageStack extends StatefulWidget {
 
 class _ImageStackState extends State<ImageStack> {
   Future<Stats> stats;
+  Future<LocationDetails> location;
   String weatherCondition;
   MaterialColor bigCircleColor = Colors.yellow;
   MaterialColor bgColor = Colors.cyan;
@@ -19,8 +21,12 @@ class _ImageStackState extends State<ImageStack> {
   @override
   void initState() {
     super.initState();
-    stats = fetchStats();
+    stats = fetchStats(initialLatitude, initialLongitude);
+    location = locationSearchByCoordinates(initialLatitude, initialLongitude);
   }
+
+  final String initialLatitude = '17.9970207';
+  final String initialLongitude = '-76.7935791';
 
   void changeBgColor(int temp) {
     if (temp > 0) {

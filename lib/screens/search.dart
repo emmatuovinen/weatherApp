@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../api/api_client.dart';
 
 class Search extends StatefulWidget {
   Search({Key key}) : super(key: key);
@@ -31,6 +32,8 @@ class MyCustomFormState extends State<MyCustomForm>
   final _formKey = GlobalKey<FormState>();
   AnimationController _controller;
   Animation<Offset> _offsetAnimation;
+  final textController = TextEditingController();
+
 
   @override
   void initState() {
@@ -49,6 +52,7 @@ class MyCustomFormState extends State<MyCustomForm>
   void dispose() {
     super.dispose();
     _controller.dispose();
+    textController.dispose();
   }
 
   @override
@@ -79,10 +83,12 @@ class MyCustomFormState extends State<MyCustomForm>
                       }
                       return null;
                     },
+                    controller: textController,
                   ),
                   RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
+                        locationSearchByString(textController.text);
                         Scaffold.of(context).showSnackBar(
                             SnackBar(content: Text('Processing search')));
                       }
