@@ -49,6 +49,8 @@ flutter:
     - packages/time_machine/data/tzdb/tzdb.bin
     - assets/apiData.json
     - images/heart.svg
+    - images/cloud.svg
+    - images/sun.svg
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
