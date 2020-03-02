@@ -32,8 +32,6 @@ Future<LocationDetails> locationSearchByCoordinates(latitude, longitude) async {
   var stringJsonData = '$data';
   var parsedData = ApiKey.fromJson(json.decode(stringJsonData));
 
-  print(latitude);
-
   String url =
       'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$latitude,$longitude&radius=1000&key=${parsedData.googleKey}';
 
@@ -44,7 +42,7 @@ Future<LocationDetails> locationSearchByCoordinates(latitude, longitude) async {
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     print(data);
-    return LocationDetails.fromJson(json.decode(response.body));
+    return LocationDetails.fromJson(data);
   } else {
     throw Exception('Failed to load stats');
   }
@@ -66,7 +64,7 @@ Future<LocationDetails> locationSearchByString(String searchParam) async {
   if (response.statusCode == 200) {
     final data = json.decode(response.body);
     print(data);
-    return LocationDetails.fromJson(json.decode(response.body));
+    return LocationDetails.fromJson(data);
   } else {
     throw Exception('An error occurred');
   }
